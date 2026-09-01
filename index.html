@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的大学数字名片</title>
+  <!-- 只用一份样式表，修正了原来重复引用 slyle.css / style.css 的问题 -->
+  <link rel="stylesheet" href="slyle.css">
+  <!-- 早期标记"JS 已激活"：只有确认脚本能用时才允许元素初始为隐藏，
+       这样脚本一旦出错，内容仍完整可见（fail-open，避免白屏） -->
+  <script>document.documentElement.classList.add("has-js");</script>
+</head>
+<body>
+
+  <!-- ============================================================
+       开场页（Splash）
+       分界线：从下面这个注释到"开场页结束"之间，都是开场页
+       想单独拆出去时，把这一段整个复制到独立文件即可
+       ============================================================ -->
+  <div class="splash" id="splash" role="button" aria-label="点击进入主页" tabindex="0">
+    <!-- 背景动效：蓝绿光晕（毛玻璃质感），颜色与主页同一套 --blue/--teal -->
+    <div class="splash-glow glo1"></div>
+    <div class="splash-glow glo2"></div>
+
+    <!-- 中央文字：主标题被 JS 逐字打出，下方是呼吸的小提示 -->
+    <div class="splash-card">
+      <h1 class="splash-title" id="splashTitle"></h1>
+      <p class="splash-hint" id="splashHint">点击任意处进入</p>
+    </div>
+  </div>
+  <!-- 开场页结束 =================================================== -->
+
+  <!-- ============================================================
+       主页（你要自我介绍的内容）开始
+       ============================================================ -->
+  <!-- 主卡片容器 -->
+  <main class="card">
+
+    <!-- ===== 首屏：个人名片头部（带入场动画） ===== -->
+    <header class="profile">
+      <!-- 头像：用"湖北"作为占位文字头像，想要照片就替换为大图 -->
+      <div class="avatar pop-in">湖北</div>
+      <div class="profile-text">
+        <p class="tag fade-in d1">2026 · 大一新生</p>
+        <!-- 名字：JS 用打字机效果逐字打出文案 -->
+        <h1 id="typedName" data-text="你好，我是周同学"></h1>
+        <p class="intro fade-in d3">来自湖北黄冈</p>
+      </div>
+    </header>
+
+    <!-- ===== 关于我 ===== -->
+    <section class="reveal">
+      <h2 class="section-title"><span>✦</span> 关于我</h2>
+      <p>我喜欢爬山、摄影和探索新技术。大学四年，我希望认识更多伙伴，也希望做出真正能被别人使用的产品。</p>
+      <img class="photo" src="images/微信图片_2026-07-26_150951_871.jpg" alt="闲了个瑜">
+    </section>
+
+    <!-- ===== 我的兴趣 ===== -->
+    <section class="reveal">
+      <h2 class="section-title"><span>✦</span> 我的兴趣</h2>
+      <ul class="chips">
+        <li>⛰️ 爬山</li>
+        <li>📷 摄影</li>
+        <li>🤖 AI创作</li>
+      </ul>
+    </section>
+
+    <!-- ===== 大学目标 ===== -->
+    <section class="reveal">
+      <h2 class="section-title"><span>✦</span> 大学目标</h2>
+      <ol class="goals">
+        <li><span class="num">01</span>学习多门语言</li>
+        <li><span class="num">02</span>登上几座山峰</li>
+        <li><span class="num">03</span>找到不错的实习</li>
+      </ol>
+    </section>
+
+    <!-- ===== 联系方式（邮箱 + 电话，配合图标） ===== -->
+    <section class="reveal contact">
+      <h2 class="section-title"><span>✦</span> 联系我</h2>
+      <div class="contact-grid">
+        <!-- QQ邮箱 -->
+        <a class="contact-card" href="mailto:2708044112@qq.com">
+          <!-- 内联 SVG 邮箱图标，不依赖外部库 -->
+          <svg class="c-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <path d="m3 7 9 6 9-6"></path>
+          </svg>
+          <span class="c-label">QQ邮箱</span>
+          <span class="c-link">去qq邮箱</span>
+        </a>
+        <!-- 电话 -->
+        <a class="contact-card" href="tel:10086">
+          <!-- 内联 SVG 电话图标 -->
+          <svg class="c-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.12 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          <span class="c-label">电话</span>
+          <span class="c-link">电我</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===== 底部：行动按钮 + 品牌签名 ===== -->
+    <footer>
+      <a class="button" href="mailto:hello@example.com">和我交流</a>
+      <!-- 年份由 JS 自动更新 -->
+      <p>Made with AI × 昕征途技术社区</p>
+    </footer>
+  </main>
+
+  <!-- ===== 回到顶部按钮（固定在屏幕角落，滚动后才出现） ===== -->
+  <button id="toTop" class="to-top" aria-label="回到顶部" title="回到顶部">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5"></path>
+      <path d="m5 12 7-7 7 7"></path>
+    </svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>

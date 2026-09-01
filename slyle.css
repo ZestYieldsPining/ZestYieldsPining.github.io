@@ -1,0 +1,446 @@
+/* =============================================================
+   我的大学数字名片 · 样式表
+   主题：清爽蓝绿（你选定的配色）
+   说明：全局统一使用 CSS 变量（见 :root），想换颜色只改这里。
+   ============================================================= */
+
+/* ---------- 1. 全局配色变量（改这里即可换主题色） ---------- */
+:root {
+  --blue: #2fa8d3;      /* 主色·清爽蓝 */
+  --teal: #2ec4b6;      /* 主色·青绿 */
+  --bg: #eef7f9;        /* 页面底色·极浅蓝 */
+  --card: #ffffff;      /* 卡片底色 */
+  --text: #0f2438;      /* 正文主文字色 */
+  --muted: #5c7184;     /* 次要文字色 */
+  --line: #dceaf0;      /* 分隔线颜色 */
+  --ring: #0b8fa0;      /* 键盘焦点环颜色（需与底色有明显对比） */
+  --blue-ink: #1573a8;  /* 用于小号文字的主色（确保对比度达 WCAG AA） */
+
+  /* 蓝→绿渐变，用于按钮、头像、标题装饰 */
+  --grad: linear-gradient(135deg, var(--blue), var(--teal));
+
+  /* 动效 token：统一缓动曲线与时长（专业标准，替代裸 ease） */
+  --ease-out: cubic-bezier(.25, 1, .5, 1);   /* ease-out-quart，内容到达用 */
+  --t-hover: 200ms;                          /* hover/状态变化：150-300ms */
+  --t-arrive: 700ms;                         /* 入场/滚动到达：500-800ms */
+
+  font-size: 17px;      /* 基准字号，正文约等于 1rem */
+}
+
+/* ---------- 2. 基础重置 ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; } /* 平滑滚动，配合"回到顶部" */
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 60px 20px;
+  color: var(--text);
+  /* 背景：蓝绿双色的柔和光晕，清新不刺眼 */
+  background:
+    radial-gradient(circle at 15% 15%, rgba(47,168,211,.18), transparent 38%),
+    radial-gradient(circle at 85% 30%, rgba(46,196,182,.16), transparent 40%),
+    radial-gradient(circle at 50% 100%, rgba(47,168,211,.10), transparent 45%),
+    var(--bg);
+  background-attachment: fixed;
+  font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  line-height: 1.8;
+}
+
+/* ---------- 3. 主卡片 ---------- */
+.card {
+  width: min(860px, 100%);
+  margin: 0 auto;
+  padding: 52px 56px;
+  background: rgba(255,255,255,.86);
+  backdrop-filter: blur(10px);          /* 玻璃拟态质感 */
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: 0 30px 80px rgba(31,72,95,.14);
+  transition: box-shadow .3s ease;
+}
+.card:hover { box-shadow: 0 34px 90px rgba(31,72,95,.18); }
+
+/* ---------- 4. 首屏：头像 + 名字区 ---------- */
+.profile {
+  display: flex;
+  gap: 26px;
+  align-items: center;
+  padding-bottom: 34px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* 头像：文字占位，蓝绿渐变 + 弹跳入场 */
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  flex: 0 0 96px;
+  border-radius: 26px;
+  color: #ffffff;
+  background: var(--grad);
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  box-shadow: 0 16px 34px rgba(46,196,182,.35);
+}
+
+/* ---------- 5. 标题层级 ---------- */
+h1 {
+  margin: 4px 0 6px;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: .5px;
+}
+h1::after {                   /* 打字机光标 */
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: .9em;
+  margin-left: 5px;
+  vertical-align: -0.1em;
+  background: var(--teal);
+  animation: caret 1s steps(1) infinite;
+}
+@keyframes caret { 50% { opacity: 0; } }
+
+/* 分区标题：小号图标 + 缩写线，强化层级 */
+.profile-text { min-width: 0; }
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  font-size: 21px;
+  font-weight: 800;
+}
+.section-title span {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 9px;
+  color: #fff;
+  background: var(--grad);
+  font-size: 13px;
+}
+.section-title::after {        /* 标题右侧延长线 */
+  content: "";
+  flex: 1;
+  height: 2px;
+  margin-left: 6px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--blue), transparent);
+}
+
+.tag { margin: 0; color: var(--blue-ink); font-size: 13px; font-weight: 800; }
+.intro { margin: 0 0 6px; color: var(--muted); }
+p { color: #41627a; }
+
+/* ---------- 6. 关于我 · 照片 ---------- */
+.photo {
+  display: block;
+  max-width: min(340px, 100%);
+  margin: 18px auto 0;
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(31,72,95,.15);
+}
+
+/* ---------- 7. 兴趣标签（胶囊） ---------- */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.chips li {
+  padding: 9px 16px;
+  background: linear-gradient(135deg, #e8f6fb, #e6f7f5);
+  border: 1px solid #d3eef1;
+  border-radius: 999px;
+  color: var(--teal);
+  font-weight: 600;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.chips li:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(46,196,182,.22);
+}
+
+/* ---------- 8. 大学目标（带序号） ---------- */
+.goals {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.goals li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px dashed var(--line);
+  font-weight: 600;
+}
+.goals li:last-child { border-bottom: none; }
+.goals .num {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;   /* 数字用蓝绿渐变 */
+}
+
+/* ---------- 9. 联系方式卡片 ---------- */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 20px;
+  background: #f4fbfd;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  color: var(--text);
+  text-decoration: none;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.contact-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--teal);
+  box-shadow: 0 14px 28px rgba(46,196,182,.2);
+}
+.c-icon { width: 30px; height: 30px; color: var(--blue); margin-bottom: 8px; }
+.c-label { font-weight: 800; font-size: 15px; }
+.c-link { color: var(--muted); font-size: 14px; }
+
+/* ---------- 10. 底部按钮 + 页脚签名 ---------- */
+footer {
+  margin-top: 44px;
+  padding-top: 26px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+.button {
+  display: inline-block;
+  padding: 12px 26px;
+  color: #fff;
+  background: var(--grad);
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 800;
+  letter-spacing: 1px;
+  box-shadow: 0 14px 30px rgba(47,168,211,.32);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 36px rgba(47,168,211,.4);
+}
+.button:active { transform: translateY(0); box-shadow: 0 8px 16px rgba(47,168,211,.3); }
+footer p { margin: 16px 0 0; color: var(--muted); font-size: 13px; }
+
+/* ---------- 10b. 键盘焦点可见性（无障碍） ---------- */
+/* 仅键盘导航时显示清晰的焦点环，鼠标点击不干扰视觉 */
+.button:focus-visible,
+.contact-card:focus-visible,
+.to-top:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+
+/* ---------- 11. 回到顶部悬浮按钮 ---------- */
+.to-top {
+  position: fixed;
+  right: 26px;
+  bottom: 26px;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--grad);
+  cursor: pointer;
+  box-shadow: 0 12px 26px rgba(31,72,95,.3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px);
+  transition: opacity .3s ease, transform .3s ease, visibility .3s;
+  z-index: 99;
+}
+.to-top svg { width: 22px; height: 22px; }
+.to-top.show {           /* 出现状态，由 JS 控制 */
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.to-top:hover { transform: translateY(-4px); }
+
+/* =============================================================
+   12. 入场 / 滚动动画
+   ------------------------------------------------------------- */
+/* 首屏：元素从下方淡入（d1/d2/d3 为渐次延迟）。
+   注意：用的是 CSS 动画且结束态为不透明，即使脚本不执行内容也可见。 */
+.fade-in, .pop-in {
+  opacity: 0;
+  animation: rise var(--t-arrive) var(--ease-out) forwards;
+}
+.d1 { animation-delay: .1s; }
+.d3 { animation-delay: .35s; }
+.pop-in { animation-name: pop; }
+
+/* 向下滚动浮现：
+   - 默认状态下元素完全可见（fail-open，脚本出错也不白屏）；
+   - 只有 html 带 .has-js（确认脚本可用）时才初始隐藏，划入视口后加 .visible 浮现。 */
+.reveal {
+  transition: opacity var(--t-arrive) var(--ease-out), transform var(--t-arrive) var(--ease-out);
+}
+html.has-js .reveal { opacity: 0; transform: translateY(26px); }
+html.has-js .reveal.visible { opacity: 1; transform: none; }
+
+/* 关键帧：淡入上浮 + 头像弹出 */
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes pop  { 0% { opacity: 0; transform: scale(.6); } 70% { transform: scale(1.06); } 100% { opacity: 1; transform: scale(1); } }
+
+/* 尊重系统的"减弱动效"设置，关闭动画以免晕动；
+   同时强制所有滚动区块显示（覆盖 .has-js 的隐藏态）。 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  html.has-js .reveal, .reveal, .fade-in, .pop-in { opacity: 1; transform: none; }
+}
+
+/* =============================================================
+   14. 开场页（Splash）
+   分界线：从这里开始是"开场页"样式，可随开场页一起拆走
+   ------------------------------------------------------------- */
+.splash {
+  position: fixed;
+  inset: 0;                 /* 铺满整个屏幕 */
+  z-index: 1000;            /* 盖住主页所有内容 */
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  overflow: hidden;
+  cursor: pointer;          /* 整屏可点 */
+  /* 圆心坐标：默认屏幕中心，点击后由 JS 更新为点击位置 */
+  --cx: 50%;
+  --cy: 50%;
+  /* 蓝绿渐变底，与主页光晕同一套配色变量 */
+  background:
+    radial-gradient(circle at 20% 18%, rgba(47,168,211,.35), transparent 42%),
+    radial-gradient(circle at 82% 28%, rgba(46,196,182,.32), transparent 44%),
+    linear-gradient(160deg, #dff1fb 0%, #eef7f9 50%, #e4f7f4 100%);
+  text-align: center;
+  /* 基础状态：裁剪圆大到盖满全屏（视觉上等于未裁剪） */
+  clip-path: circle(220vmax at var(--cx) var(--cy));
+  /* 圆形扩散过渡：约 0.7s，符合 0.6~0.8s 要求 */
+  transition: clip-path .7s var(--ease-out);
+}
+.splash.leaving {           /* 点击后：裁剪圆缩到 0，主页从圆内露出 */
+  clip-path: circle(0px at var(--cx) var(--cy));
+  pointer-events: none;
+}
+
+/* 背景光晕：毛玻璃质感的小色块，缓慢漂浮 */
+.splash-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: .5;
+  pointer-events: none;
+}
+.glo1 {
+  width: 360px; height: 360px;
+  top: -80px; left: -90px;
+  background: radial-gradient(circle, var(--blue), transparent 70%);
+  animation: float 8s ease-in-out infinite;
+}
+.glo2 {
+  width: 420px; height: 420px;
+  bottom: -120px; right: -90px;
+  background: radial-gradient(circle, var(--teal), transparent 70%);
+  animation: float 11s ease-in-out infinite reverse;
+}
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(22px); } }
+
+/* 中央玻璃卡片，承载标题与提示 */
+.splash-card {
+  position: relative;
+  z-index: 2;
+  max-width: min(680px, 100%);
+  padding: 46px 50px;
+  background: rgba(255,255,255,.55);
+  backdrop-filter: blur(16px);          /* 玻璃拟态 */
+  border: 1px solid rgba(255,255,255,.7);
+  border-radius: 28px;
+  box-shadow: 0 30px 80px rgba(31,72,95,.18);
+  transition: transform .15s ease;      /* 按下时有轻微收紧反馈 */
+}
+.splash:active .splash-card { transform: scale(.985); }
+
+.splash-title {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 54px);    /* 响应式字号，手机不溢出 */
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--text);
+}
+.splash-title::after {                  /* 打字机光标 */
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: .85em;
+  margin-left: 6px;
+  vertical-align: -0.05em;
+  background: var(--teal);
+  animation: caret 1s steps(1) infinite;
+}
+@keyframes caret { 50% { opacity: 0; } }
+
+.splash-hint {
+  margin: 18px 0 0;
+  color: var(--blue-ink);
+  font-size: 15px;
+  font-weight: 600;
+  opacity: 0;                             /* 打字完才 .show 淡出 */
+  transition: opacity .5s var(--ease-out);
+}
+.splash-hint.show { opacity: 1; animation: breathe 2.2s ease-in-out infinite; }
+@keyframes breathe { 0%,100% { opacity: .35; } 50% { opacity: 1; } }
+
+/* 点击反馈（加分项）：标题先放大一下再消失 */
+.splash-title.clicked { animation: punch .5s var(--ease-out); }
+@keyframes punch { 0% { transform: scale(1); } 30% { transform: scale(1.08); } 100% { transform: scale(1); } }
+
+/* 开场页的手机端微调 */
+@media (max-width: 600px) {
+  .splash-card { padding: 30px 26px; border-radius: 20px; }
+}
+
+/* =============================================================
+   13. 响应式：手机 / 平板 / 电脑
+   ------------------------------------------------------------- */
+@media (max-width: 720px) {            /* 平板 */
+  .card { padding: 40px 32px; }
+}
+@media (max-width: 600px) {            /* 手机 */
+  body { padding: 20px 12px; }
+  .card { padding: 26px 20px; border-radius: 20px; }
+  .profile { align-items: flex-start; gap: 15px; }
+  .avatar { width: 68px; height: 68px; flex-basis: 68px; border-radius: 20px; font-size: 22px; }
+  h1 { font-size: 27px; }
+  .intro { font-size: 14px; }
+  .section-title { font-size: 18px; }
+  .contact-grid { grid-template-columns: 1fr; }  /* 联系方式改单列 */
+  .to-top { right: 16px; bottom: 16px; width: 44px; height: 44px; }
+}
