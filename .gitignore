@@ -8,5 +8,26 @@ Thumbs.db
 *.out
 a.out
 
+# Visual Studio 编译产物、中间文件、工程配置，一律不上传
+x64/
+Debug/
+Release/
+zhou/
+.vs/
+*.pdb
+*.ilk
+*.idb
+*.obj
+*.tlog
+*.recipe
+*.log
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+# 嵌套在里面的另一个仓库（181MB 的折腾堆），不属于本站
+github/
+
 # 课程教案，不上传到公开网站
 前端开发基础教学教案(1)(1).html
