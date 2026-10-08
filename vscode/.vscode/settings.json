@@ -1,0 +1,35 @@
+{
+  // ============================================================
+  //  这个文件夹专属的编辑器设置
+  // ============================================================
+  "files.encoding": "utf8",              // 保存源码统一用 UTF-8，别用 GBK
+  "files.autoGuessEncoding": true,       // 万一是老文件（GBK），打开时自动猜对
+
+  // 把编译产物从左边文件列表里藏起来，看着清爽
+  "files.exclude": {
+    "**/*.exe": true,
+    "**/*.o": true
+  },
+
+  // 【第一道保险】关掉编辑器右上角那个 ▷ 播放按钮。
+  // 它是 C/C++ 插件自带的「运行 C/C++ 文件」，用自己写死的参数编译。
+  "C_Cpp.debugShortcut": false,
+
+  "C_Cpp.default.compilerPath": "E:/Dev-Cpp/MinGW64/bin/gcc.exe",
+
+  // 【第二道保险】就算那个 ▷ 按钮被点到了，也让它带上 GBK 参数。
+  // 插件的默认命令是写死的 ['-fdiagnostics-color=always','-g','${file}','-o',...]，
+  // 但它会把这里的参数追加到后面（源码 generateTask() 里 args.concat(compilerArgs)）。
+  // 注意：这里不要放 -std=xxx，否则 .cpp 文件会被骂「-std=c99 对 C++ 无效」。
+  "C_Cpp.default.compilerArgs": [
+    "-Wall",
+    "-fexec-charset=GBK"
+  ],
+
+  "C_Cpp.default.cStandard": "c99",
+  "C_Cpp.default.cppStandard": "c++11",
+  "C_Cpp.default.intelliSenseMode": "windows-gcc-x64",
+
+  "[c]":   { "editor.tabSize": 4 },      // 官方写法是 4 个空格缩进
+  "[cpp]": { "editor.tabSize": 4 }
+}

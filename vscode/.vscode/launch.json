@@ -1,0 +1,54 @@
+{
+  // ============================================================
+  //  调试配置：按 F5 时干什么
+  //  左边栏「运行和调试」的顶部下拉框里选 C 还是 C++
+  // ============================================================
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // ---------- 调试 C ----------
+      "name": "调试C (gcc)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
+      "args": [],
+      "stopAtEntry": false,          // 改成 true 就会一进门就停下，方便从头单步
+      "cwd": "${fileDirname}",
+      "environment": [],
+      // 程序在下方的「终端」里跑：scanf 能正常输入，跑完结果也不会消失
+      "console": "integratedTerminal",
+      "MIMode": "gdb",
+      "miDebuggerPath": "E:/Dev-Cpp/MinGW64/bin/gdb.exe",
+      "setupCommands": [
+        {
+          "description": "为 gdb 启用整齐打印",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "编译C"       // 按 F5 先自动编译，再调试
+    },
+    {
+      // ---------- 调试 C++ ----------
+      "name": "调试C++ (g++)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${fileDirname}",
+      "environment": [],
+      "console": "integratedTerminal",
+      "MIMode": "gdb",
+      "miDebuggerPath": "E:/Dev-Cpp/MinGW64/bin/gdb.exe",
+      "setupCommands": [
+        {
+          "description": "为 gdb 启用整齐打印",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "编译C++"
+    }
+  ]
+}

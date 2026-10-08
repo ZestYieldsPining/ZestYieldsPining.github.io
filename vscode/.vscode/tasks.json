@@ -1,0 +1,47 @@
+{
+  // ============================================================
+  //  编译配置：告诉 VS Code「怎么把 .c / .cpp 变成 .exe」
+  //  改编译器位置的话，下面两个 command 一起改
+  // ============================================================
+  "version": "2.0.0",
+  "tasks": [
+    {
+      // ---------- C 语言：用 gcc ----------
+      "type": "cppbuild",
+      "label": "编译C",
+      "command": "E:/Dev-Cpp/MinGW64/bin/gcc.exe",
+      "args": [
+        "-std=c99",              // 语言标准。默认是 1990 年的老标准，for(int i=0;) 会编译不过
+        "-g",                    // 生成调试信息，F5 打断点靠它
+        "-Wall",                 // 打开所有警告，帮你少踩坑
+        "-fexec-charset=GBK",    // 让 printf 的中文按 GBK 输出，否则黑窗口里是乱码
+        "${file}",               // 当前打开的这个文件
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}.exe"  // 编译到文件旁边，同名
+      ],
+      "options": { "cwd": "${fileDirname}" },
+      "problemMatcher": ["$gcc"],
+      "group": { "kind": "build", "isDefault": true },
+      "detail": "用 gcc 编译当前 .c 文件（按 Ctrl+Shift+B 触发）"
+    },
+    {
+      // ---------- C++：用 g++ ----------
+      "type": "cppbuild",
+      "label": "编译C++",
+      "command": "E:/Dev-Cpp/MinGW64/bin/g++.exe",
+      "args": [
+        "-std=c++11",            // C++ 标准，2011 版，这套老编译器能支持到这儿
+        "-g",
+        "-Wall",
+        "-fexec-charset=GBK",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}.exe"
+      ],
+      "options": { "cwd": "${fileDirname}" },
+      "problemMatcher": ["$gcc"],
+      "group": "build",
+      "detail": "用 g++ 编译当前 .cpp 文件"
+    }
+  ]
+}

@@ -26,6 +26,16 @@ zhou/
 *.vcxproj.filters
 *.vcxproj.user
 
+# Python 虚拟环境、IDE 配置、缓存，一律不上传
+.venv/
+venv/
+.idea/
+__pycache__/
+*.pyc
+
+# 误创建的重叠目录（vscode/.vscode/.vscode）
+vscode/.vscode/.vscode/
+
 # 嵌套在里面的另一个仓库（181MB 的折腾堆），不属于本站
 github/
 
